@@ -1,0 +1,124 @@
+# =============================================================================
+# Koudougou Gourmet — Manifeste du projet Flutter
+# -----------------------------------------------------------------------------
+# Ce fichier déclare l'identité de l'application, ses dépendances de production
+# et de développement, ainsi que les ressources (assets) embarquées.
+# Toute dépendance ajoutée ici doit être justifiée dans l'architecture Clean :
+# elle ne doit jamais imposer un couplage entre la couche Domain et Flutter.
+# =============================================================================
+
+# Nom technique du package Dart (snake_case, unique sur pub.dev).
+# Il est utilisé par les imports internes : `package:koudougou_gourmet/...`.
+name: koudougou_gourmet
+
+# Description lisible par un humain, affichée par les outils et le stores.
+description: "Guide mobile des restaurants et maquis de Koudougou (Burkina Faso) : menus, prix FCFA, Live Braise, WhatsApp et Mobile Money."
+
+# Empêche une publication accidentelle de l'application sur pub.dev.
+publish_to: "none"
+
+# Version sémantique de l'application : majeure.mineure.correctif+build.
+# Le numéro après « + » sert de versionCode Android / CFBundleVersion iOS.
+version: 1.0.0+1
+
+# Contraintes de compatibilité du SDK Dart et du framework Flutter.
+# Elles garantissent que le projet utilise bien les API récentes (null safety,
+# classes scellées, motifs) et évitent un build avec un SDK trop ancien.
+environment:
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
+
+# -----------------------------------------------------------------------------
+# Dépendances de production
+# -----------------------------------------------------------------------------
+dependencies:
+  # Framework UI et bibliothèque standard Flutter.
+  flutter:
+    sdk: flutter
+
+  # Traductions officielles des widgets Material et Cupertino.
+  # Elles fournissent les libellés français (boutons de dialogue, sélecteurs
+  # de date, menus contextuels) sans dépendre d'un service externe.
+  flutter_localizations:
+    sdk: flutter
+
+  # Icônes de style iOS utilisées ponctuellement dans l'interface.
+  cupertino_icons: ^1.0.8
+
+  # Gestion d'état réactive et prévisible : BLoC / Cubit.
+  flutter_bloc: ^9.1.1
+
+  # Comparaison de valeur (== / hashCode) pour les entités et états immuables.
+  equatable: ^3.0.0
+
+  # Conteneur d'injection de dépendances (service locator) pour l'application.
+  get_it: ^9.3.0
+
+  # Programmation fonctionnelle : type `Either<Failure, Success>` sans exception
+  # traversant les couches Domain et Data.
+  fpdart: ^1.2.0
+
+  # Client HTTP léger pour la DataSource distante (API du catalogue).
+  # Il est encapsulé dans la couche Data : le Domain ne le connaît pas.
+  http: ^1.6.0
+
+  # Base de données locale clé/valeur, ici via son édition communautaire
+  # maintenue (`hive_ce`), compatible avec les SDK Dart/Flutter récents.
+  # Elle sert au cache offline-first et au stockage des favoris.
+  hive_ce: ^2.23.3
+
+  # Initialisation de Hive pour Flutter (répertoire applicatif multiplateforme).
+  hive_ce_flutter: ^2.5.0
+
+  # Ouverture sécurisée de liens externes : WhatsApp, téléphone, GPS.
+  url_launcher: ^6.3.3
+
+  # Accès à la position GPS de l'utilisateur (tri par proximité, itinéraires).
+  geolocator: ^14.1.2
+
+  # Détection de la connectivité réseau pour le mode offline-first.
+  # 7.3.1 est la dernière version compatible avec geolocator 14.1.x (dbus).
+  connectivity_plus: ^7.3.1
+
+  # Formatage localisé (dates en français, nombres) et opérations i18n.
+  intl: ^0.20.3
+
+  # Chargement de configuration non secrète depuis un fichier `.env`.
+  # Les vraies clés privées ne doivent JAMAIS être embarquées dans l'app.
+  flutter_dotenv: ^6.0.2
+
+  # Coffre-fort natif (Keychain iOS / Keystore Android) pour la clé AES du cache.
+  flutter_secure_storage: ^11.2.0
+  crypto: ^3.0.8
+  share_plus: ^13.3.1
+
+# -----------------------------------------------------------------------------
+# Dépendances de développement (non embarquées dans le binaire final)
+# -----------------------------------------------------------------------------
+dev_dependencies:
+  # Framework de tests Flutter (widget tests + tests unitaires Dart).
+  flutter_test:
+    sdk: flutter
+
+  # Règles de lint recommandées par l'équipe Flutter, enrichies plus bas dans
+  # `analysis_options.yaml` avec des règles de sécurité et de strictness.
+  flutter_lints: ^6.0.0
+
+# -----------------------------------------------------------------------------
+# Configuration Flutter et ressources embarquées
+# -----------------------------------------------------------------------------
+flutter:
+  # Active la police Material Icons (nécessaire pour `Icons.*`).
+  uses-material-design: true
+
+  # Liste des assets copiés dans le bundle de l'application.
+  assets:
+    # Fichier de configuration locale (copié depuis `.env.example`).
+    # Il ne contient que des valeurs publiques, jamais de secret serveur.
+    - .env
+
+    # Dossier des illustrations et photos de plats (rempli aux étapes UI).
+    - assets/images/
+
+    # Dossier des données de démonstration (seed JSON de Koudougou, étape 4).
+    - assets/seed/

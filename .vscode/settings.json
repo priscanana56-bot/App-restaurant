@@ -1,0 +1,10 @@
+{
+  // Le projet est compilé avec Flutter 3.50.1 / Dart 3.14.0 (C:\src\flutter).
+  // Le réglage utilisateur global pointait vers un ancien SDK (3.39 / Dart 3.10),
+  // ce qui faisait apparaître de fausses erreurs dans VS Code.
+  "dart.flutterSdkPath": "C:\\src\\flutter",
+
+  // Redémarre automatiquement l'analyseur quand ce fichier change.
+  "dart.analysisServerEnabled": true,
+  "cmake.sourceDirectory": "C:/Users/USER/Desktop/App restaurant/windows"
+}

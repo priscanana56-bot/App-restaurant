@@ -1,0 +1,81 @@
+# =============================================================================
+# Analyse statique stricte.
+# -----------------------------------------------------------------------------
+# Objectif : empêcher les régressions de typage et les pratiques risquées AVANT
+# l'exécution. Le projet interdit `dynamic` implicite et les casts non contrôlés.
+# =============================================================================
+
+# Règles de base recommandées par l'équipe Flutter.
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  # Mode strict : toute inférence incertaine devient une erreur d'analyse.
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+
+  errors:
+    # Les TODO doivent rester visibles mais ne bloquent pas la CI de développement.
+    todo: ignore
+    # Un import inutilisé est une erreur, pas un simple avertissement.
+    unused_import: error
+    # Flutter 3.50 amorce la migration `material.dart` -> `package:material_ui`.
+    # Le projet reste volontairement sur l'API Material historique, stabilisée et
+    # couverte par tous nos tests : on neutralise uniquement ces infos de
+    # dépréciation, sans masquer les erreurs ni les avertissements.
+    deprecated_member_use: ignore
+
+  exclude:
+    # Fichiers générés (build_runner) : jamais édités à la main.
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.mocks.dart"
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+
+linter:
+  rules:
+    # -------------------------------------------------------------------------
+    # Typage et robustesse
+    # -------------------------------------------------------------------------
+    always_declare_return_types: true
+    avoid_dynamic_calls: true
+    avoid_empty_else: true
+    avoid_returning_null_for_void: true
+    avoid_slow_async_io: true
+    avoid_type_to_string: true
+    cast_nullable_to_non_nullable: true
+    prefer_final_locals: true
+    unnecessary_lambdas: true
+
+    # -------------------------------------------------------------------------
+    # Sécurité et propreté
+    # -------------------------------------------------------------------------
+    avoid_print: true
+    avoid_relative_lib_imports: true
+    cancel_subscriptions: true
+    close_sinks: true
+    empty_catches: true
+    only_throw_errors: true
+    throw_in_finally: true
+
+    # -------------------------------------------------------------------------
+    # Style cohérent
+    # -------------------------------------------------------------------------
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true
+    require_trailing_commas: true
+    sized_box_for_whitespace: true
+    sort_child_properties_last: true
+    use_build_context_synchronously: true
+    use_super_parameters: true
+
+    # -------------------------------------------------------------------------
+    # Asynchronisme
+    # -------------------------------------------------------------------------
+    unawaited_futures: true
